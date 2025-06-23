@@ -21,8 +21,8 @@ API de gerenciamento de clientes para o projeto CCaaS, construída com Fastify, 
 
 1. Clone o repositório:
 ```bash
-git clone <repository-url>
-cd <project-name>
+git clone https://github.com/lucasquitan/poc-ccaas.git
+cd poc-ccaas
 ```
 
 2. Configure as variáveis de ambiente:
