@@ -26,24 +26,40 @@ cd poc-ccaas
 ```
 
 2. Configure as variáveis de ambiente:
+
+### Opção 1: Script Automático (Recomendado)
 ```bash
-cp .env-example .env
+# Para desenvolvimento local
+./setup-env.sh dev
+
+# Para produção (Docker)
+./setup-env.sh production
+
+# Para ver a configuração atual
+./setup-env.sh show
 ```
 
-3. Edite o arquivo `.env` com suas configurações:
-```env
-NODE_ENV=production
-PORT=3333
-DATABASE_URL=postgresql://your_db_user:your_db_password@db:5432/your_db_name?schema=public
-POSTGRES_USER=your_db_user
-POSTGRES_PASSWORD=your_db_password
-POSTGRES_DATABASE=your_db_name
+### Opção 2: Configuração Manual
+```bash
+# Copie o arquivo de exemplo
+cp .env-example .env
+
+# Edite o arquivo .env com suas configurações
 ```
+
+O arquivo `.env-example` contém configurações para diferentes ambientes:
+
+- **Desenvolvimento**: Usa `localhost` como host do banco
+- **Produção**: Usa `db` como host do banco (Docker Compose)
+- **Teste**: Configuração separada para testes
 
 ## 🐳 Execução com Docker (Recomendado)
 
 ### Desenvolvimento
 ```bash
+# Configurar ambiente de desenvolvimento
+./setup-env.sh dev
+
 # Iniciar apenas o banco de dados
 docker-compose up db
 
@@ -56,6 +72,9 @@ npm run dev
 
 ### Produção
 ```bash
+# Configurar ambiente de produção
+./setup-env.sh production
+
 # Executar tudo com Docker Compose
 docker-compose up --build
 
@@ -65,22 +84,27 @@ docker-compose up -d --build
 
 ## 💻 Execução Local
 
-1. Instale as dependências:
+1. Configure o ambiente de desenvolvimento:
+```bash
+./setup-env.sh dev
+```
+
+2. Instale as dependências:
 ```bash
 npm install
 ```
 
-2. Execute as migrações:
+3. Execute as migrações:
 ```bash
 npm run prisma:migrate
 ```
 
-3. Execute o seed dos dados:
+4. Execute o seed dos dados:
 ```bash
 npm run seed:dev
 ```
 
-4. Inicie o servidor de desenvolvimento:
+5. Inicie o servidor de desenvolvimento:
 ```bash
 npm run dev
 ```
