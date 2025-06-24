@@ -25,6 +25,9 @@ NODE_ENV=dev
 # Server port
 PORT=3333
 
+# Debug mode for enhanced logging
+DEBUG_MODE=false
+
 # Database configuration
 # Use 'localhost' for local development
 DATABASE_URL=postgresql://docker:BradescoPOC@localhost:5432/bradesco?schema=public
@@ -42,6 +45,9 @@ NODE_ENV=production
 
 # Server port
 PORT=3333
+
+# Debug mode for enhanced logging
+DEBUG_MODE=false
 
 # Database configuration
 # Use 'db' for Docker Compose networking

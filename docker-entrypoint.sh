@@ -25,11 +25,11 @@ fi
 
 # Push database schema (creates tables if they don't exist)
 echo "Pushing database schema..."
-npm run prisma:db:push
+DATABASE_URL="postgresql://docker:BradescoPOC@db:5432/bradesco?schema=public" npm run prisma:db:push
 
 # Run seed
 echo "Running database seed..."
-npm run seed:prod
+DATABASE_URL="postgresql://docker:BradescoPOC@db:5432/bradesco?schema=public" npm run seed:prod
 
 # Start the application
 echo "Starting application..."

@@ -147,6 +147,82 @@ GET /customers?msisdn=5511999999999
 ```
 Retorna os dados do cliente baseado no MSISDN.
 
+## 📊 Sistema de Logging
+
+O sistema possui um middleware de logging personalizado que registra todas as requisições com as seguintes informações:
+
+### Logs Padrão
+- **Data e Hora**: Formato brasileiro (DD/MM/YYYY HH:MM:SS)
+- **IP do Cliente**: Endereço IP de origem da requisição
+- **Método HTTP**: GET, POST, PUT, DELETE, etc.
+- **Rota Acessada**: URL completa da requisição
+- **Código de Status**: Código HTTP de resposta (200, 404, 500, etc.)
+- **Tempo de Resposta**: Tempo em milissegundos para processar a requisição
+
+### Exemplo de Log
+```
+[25/12/2024 14:30:15] 192.168.1.100 - GET /customers?msisdn=5511999999999 - 200 (45ms)
+[25/12/2024 14:30:20] 192.168.1.100 - GET /health - 200 (12ms)
+[25/12/2024 14:30:25] 192.168.1.100 - GET /customers - 400 (8ms)
+```
+
+### Modo Debug (DEBUG_MODE=true)
+
+Quando a variável `DEBUG_MODE` está habilitada, o sistema também registra:
+
+- **Payload da Requisição**: Body, query parameters e route parameters
+- **Payload da Resposta**: Dados retornados pela API (quando aplicável)
+- **Logs de Eventos**: Eventos específicos da aplicação (health checks, buscas de clientes, etc.)
+
+### Configuração do Debug Mode
+
+No arquivo `.env`:
+```bash
+# Habilitar modo debug para logs detalhados
+DEBUG_MODE=true
+```
+
+### Exemplo de Log com Debug Mode
+```
+[25/12/2024 14:30:15] 🔍 Customer lookup requested
+📊 Data: {
+  "msisdn": "5511999999999"
+}
+
+📥 Request Payload for GET /customers:
+{
+  "query": {
+    "msisdn": "5511999999999"
+  }
+}
+
+[25/12/2024 14:30:15] 192.168.1.100 - GET /customers?msisdn=5511999999999 - 200 (45ms)
+
+[25/12/2024 14:30:15] 🔍 Customer found successfully
+📊 Data: {
+  "msisdn": "5511999999999",
+  "customerMSISDN": "5511999999999"
+}
+
+📤 Response Payload for GET /customers:
+{
+  "MSISDN": "5511999999999",
+  "CPF": "12345678901",
+  "CUSNAME": "João Silva",
+  "CUSCOMPANY": "Empresa ABC",
+  "OPERATOR": "Vivo",
+  "OPERATOR_ID": "VIVO001"
+}
+```
+
+### Logs de Erro
+
+Requisições com status code >= 400 são automaticamente logadas como erros:
+```
+[25/12/2024 14:30:25] 192.168.1.100 - GET /customers - 400 (8ms)
+[25/12/2024 14:30:30] 192.168.1.100 - GET /customers?msisdn=invalid - 404 (15ms)
+```
+
 ## 🏗️ Arquitetura
 
 ```

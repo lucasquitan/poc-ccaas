@@ -19,6 +19,9 @@ const envSchema = z.object({
   POSTGRES_USER: z.string(),
   POSTGRES_PASSWORD: z.string(),
   POSTGRES_DATABASE: z.string(),
+
+  // Optional debug mode for enhanced logging
+  DEBUG_MODE: z.coerce.boolean().default(false),
 })
 
 // Validate environment variables against schema
@@ -34,6 +37,10 @@ if (!_env.success) {
 // Log running mode based on NODE_ENV
 if (_env.data.NODE_ENV === 'dev') {
   console.log('🚧 Running in development mode')
+}
+
+if (_env.data.DEBUG_MODE) {
+  console.log('🪲 Running in debug mode')
 }
 
 if (_env.data.NODE_ENV === 'test') {
